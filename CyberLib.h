@@ -1,13 +1,6 @@
-п»ї//Р‘РёР±Р»РёРѕС‚РµРєР° СЂР°Р·СЂР°Р±Р°С‚С‹РІР°Р»Р°СЃСЊ РґР»СЏ РєРѕРЅС‚СЂРѕР»Р»РµСЂР° CarDuino http://carmonitor.ru/ru/carduinonanoduo-p-120.html
-//Р’СЃРµ РїСЂР°РІР° РЅР° Р±РёР±Р»РёРѕС‚РµРєСѓ CyberLib РїСЂРёРЅР°РґР»РµР¶Р°С‚ РєРѕРјРїР°РЅРёРё CarMonitor.ru
-//РћР±РЅРѕРІР»РµРЅРёСЏ Р±РёР±Р»РёРѕС‚РµРєРё СЃРєР°С‡РёРІР°Р№С‚Рµ РЅР° СЃР°Р№С‚Рµ http://www.cyber-place.ru/showthread.php?p=3789#post3789
-
 #ifndef CyberLib_H
 #define CyberLib_H
 
-// #include <inttypes.h>
-// #include <avr/pgmspace.h>
-// #include <stdint.h>
 #include <avr/interrupt.h>
 #include <avr/io.h>
 #include <avr/eeprom.h>
@@ -17,7 +10,7 @@
   #include "Arduino.h"
 #else
   #include "WProgram.h"
-#endif 
+#endif
 
 //****************Begin End*************
 #define START labelbegin:
@@ -32,10 +25,16 @@
 #define Pi 3.1415926535897932384626433832795
 #define pi 3.1415926535897932384626433832795
 
-//*************************************************Р’СЃРµ РЅР° 328 РїСЂРѕС†РµСЃСЃРѕСЂРµ**********************************
+struct LowPin
+{
+    volatile uint8_t* addr;
+    int value;
+};
+
+//*************************************************Все на 328 процессоре**********************************
 //********************************************************************************************************
 //********************************************************************************************************
-#if defined (__AVR_ATmega328__) || defined (__AVR_ATmega328P__) || defined(__AVR_ATmega168__) || defined(__AVR_ATmega88__) 
+#if defined (__AVR_ATmega328__) || defined (__AVR_ATmega328P__) || defined(__AVR_ATmega168__) || defined(__AVR_ATmega88__)
 //****************INPUT PINS*************
 #define D0_In DDRD &=B11111110
 #define D1_In DDRD &=B11111101
@@ -45,7 +44,7 @@
 #define D5_In DDRD &=B11011111
 #define D6_In DDRD &=B10111111
 #define D7_In DDRD &=B01111111
- 
+
 #define D8_In DDRB &= B11111110
 #define D9_In DDRB &= B11111101
 #define D10_In DDRB &=B11111011
@@ -59,6 +58,35 @@
 #define D17_In DDRC &=B11110111
 #define D18_In DDRC &=B11101111
 #define D19_In DDRC &=B11011111
+
+
+const LowPin _d_in[] =
+{
+    {&DDRD, B11111110},
+    {&DDRD, B11111101},
+    {&DDRD, B11111011},
+    {&DDRD, B11110111},
+    {&DDRD, B11101111},
+    {&DDRD, B11011111},
+    {&DDRD, B10111111},
+    {&DDRD, B01111111},
+
+    {&DDRB, B11111110},
+    {&DDRB, B11111101},
+    {&DDRB, B11111011},
+    {&DDRB, B11110111},
+    {&DDRB, B11101111},
+    {&DDRB, B11011111},
+
+    {&DDRC, B11111110},
+    {&DDRC, B11111101},
+    {&DDRC, B11111011},
+    {&DDRC, B11110111},
+    {&DDRC, B11101111},
+    {&DDRC, B11011111},
+};
+
+void D_In(unsigned int pin);
 
 //***************Output Pins*************
 #define MotorA0 DDRD |=B00010000
@@ -92,50 +120,50 @@
 //***************Status High Pins*************
 #define D0_High PORTD |=B00000001
 #define D1_High PORTD |=B00000010
-#define D2_High PORTD |=B00000100  
-#define D3_High PORTD |=B00001000  
-#define D4_High PORTD |=B00010000  
-#define D5_High PORTD |=B00100000     
-#define D6_High PORTD |=B01000000      
-#define D7_High PORTD |=B10000000     
+#define D2_High PORTD |=B00000100
+#define D3_High PORTD |=B00001000
+#define D4_High PORTD |=B00010000
+#define D5_High PORTD |=B00100000
+#define D6_High PORTD |=B01000000
+#define D7_High PORTD |=B10000000
 
-#define D8_High PORTB |=B00000001     
-#define D9_High PORTB |=B00000010   
-#define D10_High PORTB|=B00000100     
-#define D11_High PORTB|=B00001000   
-#define D12_High PORTB|=B00010000   
-#define D13_High PORTB|=B00100000   
-  
-#define D14_High PORTC |=B00000001   
-#define D15_High PORTC |=B00000010    
-#define D16_High PORTC |=B00000100   
-#define D17_High PORTC |=B00001000      
-#define D18_High PORTC |=B00010000     
-#define D19_High PORTC |=B00100000   
+#define D8_High PORTB |=B00000001
+#define D9_High PORTB |=B00000010
+#define D10_High PORTB|=B00000100
+#define D11_High PORTB|=B00001000
+#define D12_High PORTB|=B00010000
+#define D13_High PORTB|=B00100000
+
+#define D14_High PORTC |=B00000001
+#define D15_High PORTC |=B00000010
+#define D16_High PORTC |=B00000100
+#define D17_High PORTC |=B00001000
+#define D18_High PORTC |=B00010000
+#define D19_High PORTC |=B00100000
 
 //***************Status Low Pins*************
 #define D0_Low PORTD &= B11111110
 #define D1_Low PORTD &= B11111101
 #define D2_Low PORTD &= B11111011
-#define D3_Low PORTD &= B11110111  
-#define D4_Low PORTD &= B11101111  
-#define D5_Low PORTD &= B11011111 
-#define D6_Low PORTD &= B10111111 
-#define D7_Low PORTD &= B01111111 
+#define D3_Low PORTD &= B11110111
+#define D4_Low PORTD &= B11101111
+#define D5_Low PORTD &= B11011111
+#define D6_Low PORTD &= B10111111
+#define D7_Low PORTD &= B01111111
 
-#define D8_Low PORTB &= B11111110 
-#define D9_Low PORTB &= B11111101 
-#define D10_Low PORTB &=B11111011 
-#define D11_Low PORTB &=B11110111 
-#define D12_Low PORTB &=B11101111 
-#define D13_Low PORTB &=B11011111 
+#define D8_Low PORTB &= B11111110
+#define D9_Low PORTB &= B11111101
+#define D10_Low PORTB &=B11111011
+#define D11_Low PORTB &=B11110111
+#define D12_Low PORTB &=B11101111
+#define D13_Low PORTB &=B11011111
 
-#define D14_Low PORTC &= B11111110  
-#define D15_Low PORTC &= B11111101 
-#define D16_Low PORTC &= B11111011 
+#define D14_Low PORTC &= B11111110
+#define D15_Low PORTC &= B11111101
+#define D16_Low PORTC &= B11111011
 #define D17_Low PORTC &= B11110111
 #define D18_Low PORTC &= B11101111
-#define D19_Low PORTC &= B11011111 
+#define D19_Low PORTC &= B11011111
 
 //**************Invert Status Pins*************
 #define D0_Inv PORTD ^=B00000001
@@ -193,40 +221,40 @@
 #define A4_Read (AnRead(B01000100))
 #define A5_Read (AnRead(B01000101))
 #define A6_Read (AnRead(B01000110))
-#define A7_Read (AnRead(B01000111))	
+#define A7_Read (AnRead(B01000111))
     uint16_t AnRead(uint8_t An_pin);
-	
+
 //**************Small UART******************************
 	void UART_Init(uint32_t UART_BAUD_RATE);
 	void UART_SendByte(uint8_t b);
 	bool UART_ReadByte(uint8_t & data);
 	void UART_SendArray(uint8_t *buffer, uint16_t bufferSize);
-	
+
 //************SPI********************************
 	void StartSPI(uint8_t SPI_Mode, uint8_t SPI_Div, uint8_t SPI_Change_Shift );
 	void StopSPI(void);
 	uint8_t ReadSPI(void);
 	void SendSPI(uint8_t SPI_data) ;
-	
-//**************Converter*******************	
-	uint8_t CharToDec(uint8_t digit);	
+
+//**************Converter*******************
+	uint8_t CharToDec(uint8_t digit);
 	uint8_t DecToChar(uint8_t number);
-	
+
 //******************EEPROM*******************************
-	void WriteEEPROM_Byte(uint8_t addr, uint8_t data);  //СЃРѕС…СЂР°РЅРёС‚СЊ РІ EEPROM С‚РёРї Byte
-	void WriteEEPROM_Word(uint16_t addr, uint16_t data);  //СЃРѕС…СЂР°РЅРёС‚СЊ РІ EEPROM С‚РёРї Word
-	void WriteEEPROM_Long(uint8_t addr, uint32_t data);  //СЃРѕС…СЂР°РЅРёС‚СЊ РІ EEPROM С‚РёРї Long
-	uint8_t ReadEEPROM_Byte(uint8_t addr);  // СЃС‡РёС‚С‹РІР°РµРј Р·РЅР°С‡РµРЅРёРµ Byte РёР· EEPROM
-	uint16_t ReadEEPROM_Word(uint16_t addr);  // СЃС‡РёС‚С‹РІР°РµРј Р·РЅР°С‡РµРЅРёРµ Word РёР· EEPROM
-	uint32_t ReadEEPROM_Long(uint8_t addr);  // СЃС‡РёС‚С‹РІР°РµРј Р·РЅР°С‡РµРЅРёРµ Long РёР· EEPROM
+	void WriteEEPROM_Byte(uint8_t addr, uint8_t data);  //сохранить в EEPROM тип Byte
+	void WriteEEPROM_Word(uint16_t addr, uint16_t data);  //сохранить в EEPROM тип Word
+	void WriteEEPROM_Long(uint8_t addr, uint32_t data);  //сохранить в EEPROM тип Long
+	uint8_t ReadEEPROM_Byte(uint8_t addr);  // считываем значение Byte из EEPROM
+	uint16_t ReadEEPROM_Word(uint16_t addr);  // считываем значение Word из EEPROM
+	uint32_t ReadEEPROM_Long(uint8_t addr);  // считываем значение Long из EEPROM
 
 //**************Timer1*************************
-	extern void (*func)();	
+	extern void (*func)();
 	void StartTimer1(void (*isr)(), uint32_t set_us);
 	void StopTimer1(void);
 	void ResumeTimer1(void);
 	void RestartTimer1(void);
-	
+
 //**************Find****************************
 uint16_t find_similar(uint16_t *buf, uint8_t size_buff, uint8_t range);
 
@@ -235,10 +263,10 @@ void beep(uint16_t dur, uint16_t frq);
 
 //**************Soft Reset**********************
  void reset();
- 
-//**************Delay*************************	
-	void delay_us(uint16_t tic_us);	
-	void delay_ms(uint16_t tic_ms);	
+
+//**************Delay*************************
+	void delay_us(uint16_t tic_us);
+	void delay_ms(uint16_t tic_ms);
 // ******************************************MEGA**********************************************
 //*********************************************************************************************
 //*********************************************************************************************
@@ -598,19 +626,19 @@ void beep(uint16_t dur, uint16_t frq);
 #define D51_Read ((PINB & B00000100)>>2)	// PB 2 SPI_MOSI
 #define D52_Read ((PINB & B00000010)>>1)	// PB 1 SPI_SCK
 #define D53_Read (PINB & B00000001)		// PB 0 SPI_SS
-//**************Delay*************************	
-	void delay_us(uint16_t tic_us);	
-	void delay_ms(uint16_t tic_ms);	
+//**************Delay*************************
+	void delay_us(uint16_t tic_us);
+	void delay_ms(uint16_t tic_ms);
 
 //******************EEPROM*******************************
-	void WriteEEPROM_Byte(uint8_t addr, uint8_t data);  //СЃРѕС…СЂР°РЅРёС‚СЊ РІ EEPROM С‚РёРї Byte
-	void WriteEEPROM_Word(uint16_t addr, uint16_t data);  //СЃРѕС…СЂР°РЅРёС‚СЊ РІ EEPROM С‚РёРї Word
-	void WriteEEPROM_Long(uint8_t addr, uint32_t data);  //СЃРѕС…СЂР°РЅРёС‚СЊ РІ EEPROM С‚РёРї Long
-	uint8_t ReadEEPROM_Byte(uint8_t addr);  // СЃС‡РёС‚С‹РІР°РµРј Р·РЅР°С‡РµРЅРёРµ Byte РёР· EEPROM
-	uint16_t ReadEEPROM_Word(uint16_t addr);  // СЃС‡РёС‚С‹РІР°РµРј Р·РЅР°С‡РµРЅРёРµ Word РёР· EEPROM
-	uint32_t ReadEEPROM_Long(uint8_t addr);  // СЃС‡РёС‚С‹РІР°РµРј Р·РЅР°С‡РµРЅРёРµ Long РёР· EEPROM
+	void WriteEEPROM_Byte(uint8_t addr, uint8_t data);  //сохранить в EEPROM тип Byte
+	void WriteEEPROM_Word(uint16_t addr, uint16_t data);  //сохранить в EEPROM тип Word
+	void WriteEEPROM_Long(uint8_t addr, uint32_t data);  //сохранить в EEPROM тип Long
+	uint8_t ReadEEPROM_Byte(uint8_t addr);  // считываем значение Byte из EEPROM
+	uint16_t ReadEEPROM_Word(uint16_t addr);  // считываем значение Word из EEPROM
+	uint32_t ReadEEPROM_Long(uint8_t addr);  // считываем значение Long из EEPROM
 
-//*************************************************Leonardo Рё РІСЃРµ РЅР° 32U4**********************************
+//*************************************************Leonardo и все на 32U4**********************************
 //********************************************************************************************************
 //********************************************************************************************************
 #elif defined (__AVR_ATmega32U4__)
@@ -623,7 +651,7 @@ void beep(uint16_t dur, uint16_t frq);
 #define D5_In DDRC &=B10111111
 #define D6_In DDRD &=B01111111
 #define D7_In DDRE &=B10111111
- 
+
 #define D8_In DDRB  &=B11101111
 #define D9_In DDRB  &=B11011111
 #define D10_In DDRB &=B10111111
@@ -647,7 +675,7 @@ void beep(uint16_t dur, uint16_t frq);
 #define D5_Out DDRC |=B01000000
 #define D6_Out DDRD |=B10000000
 #define D7_Out DDRE |=B01000000
- 
+
 #define D8_Out DDRB  |=B00010000
 #define D9_Out DDRB  |=B00100000
 #define D10_Out DDRB |=B01000000
@@ -671,7 +699,7 @@ void beep(uint16_t dur, uint16_t frq);
 #define D5_High PORTC |=B01000000
 #define D6_High PORTD |=B10000000
 #define D7_High PORTE |=B01000000
- 
+
 #define D8_High PORTB  |=B00010000
 #define D9_High PORTB  |=B00100000
 #define D10_High PORTB |=B01000000
@@ -696,7 +724,7 @@ void beep(uint16_t dur, uint16_t frq);
 #define D5_Low PORTC &=B10111111
 #define D6_Low PORTD &=B01111111
 #define D7_Low PORTE &=B10111111
- 
+
 #define D8_Low PORTB  &=B11101111
 #define D9_Low PORTB  &=B11011111
 #define D10_Low PORTB &=B10111111
@@ -720,7 +748,7 @@ void beep(uint16_t dur, uint16_t frq);
 #define D5_Inv PORTC ^=B01000000
 #define D6_Inv PORTD ^=B10000000
 #define D7_Inv PORTE ^=B01000000
- 
+
 #define D8_Inv PORTB  ^=B00010000
 #define D9_Inv PORTB  ^=B00100000
 #define D10_Inv PORTB ^=B01000000
@@ -744,7 +772,7 @@ void beep(uint16_t dur, uint16_t frq);
 #define D5_Read ((PINC & B01000000)>>6)
 #define D6_Read ((PIND & B10000000)>>7)
 #define D7_Read ((PINE & B01000000)>>6)
- 
+
 #define D8_Read ((PINB  & B00010000)>>4)
 #define D9_Read ((PINB  & B00100000)>>5)
 #define D10_Read ((PINB & B01000000)>>6)
@@ -770,10 +798,10 @@ void beep(uint16_t dur, uint16_t frq);
 uint16_t AnRead(uint8_t An_pin);
 
 
-//**************Delay*************************	
-	void delay_us(uint16_t tic_us);	
+//**************Delay*************************
+	void delay_us(uint16_t tic_us);
 	void delay_ms(uint16_t tic_ms);
-	
+
 //**************Low High Pins**********************
 void D_High(uint16_t Pin);
 void D_Low(uint16_t Pin);
@@ -783,11 +811,11 @@ void D_Low2(uint16_t Pin);
 void D_Pin(uint16_t Pin, uint16_t Status);
 void D_Pin2(uint16_t Pin, uint16_t Status);
 
-		
+
 #else
-#error  Р’Р°С€ РєРѕРЅС‚СЂРѕР»Р»РµСЂ Р±РёР±Р»РёРѕС‚РµРєРѕР№ CyBerLib РЅРµ РїРѕРґРґРµСЂР¶РёРІР°РµС‚СЃСЏ
+#error  Ваш контроллер библиотекой CyBerLib не поддерживается
 #endif
 
-	
+
 //**************End***************************
 #endif //CyberLib_H
