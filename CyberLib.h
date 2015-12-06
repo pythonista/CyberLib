@@ -59,35 +59,6 @@ struct LowPin
 #define D18_In DDRC &=B11101111
 #define D19_In DDRC &=B11011111
 
-
-const LowPin _d_in[] =
-{
-    {&DDRD, B11111110},
-    {&DDRD, B11111101},
-    {&DDRD, B11111011},
-    {&DDRD, B11110111},
-    {&DDRD, B11101111},
-    {&DDRD, B11011111},
-    {&DDRD, B10111111},
-    {&DDRD, B01111111},
-
-    {&DDRB, B11111110},
-    {&DDRB, B11111101},
-    {&DDRB, B11111011},
-    {&DDRB, B11110111},
-    {&DDRB, B11101111},
-    {&DDRB, B11011111},
-
-    {&DDRC, B11111110},
-    {&DDRC, B11111101},
-    {&DDRC, B11111011},
-    {&DDRC, B11110111},
-    {&DDRC, B11101111},
-    {&DDRC, B11011111},
-};
-
-void D_In(unsigned int pin);
-
 //***************Output Pins*************
 #define MotorA0 DDRD |=B00010000
 #define MotorA1 DDRD |=B00100000
@@ -165,6 +136,14 @@ void D_In(unsigned int pin);
 #define D18_Low PORTC &= B11101111
 #define D19_Low PORTC &= B11011111
 
+void D_In(int pin);
+void D_Out(int pin);
+void D_High(int pin);
+void D_Low(int pin);
+void D_Pin(int Pin, int Status);
+uint16_t D_Read(int pin);
+
+
 //**************Invert Status Pins*************
 #define D0_Inv PORTD ^=B00000001
 #define D1_Inv PORTD ^=B00000010
@@ -214,14 +193,15 @@ void D_In(unsigned int pin);
 #define D19_Read ((PINC & B00100000)>>5)
 
 //**************Analog READ*******************
-#define A0_Read (AnRead(B01000000))
-#define A1_Read (AnRead(B01000001))
-#define A2_Read (AnRead(B01000010))
-#define A3_Read (AnRead(B01000011))
-#define A4_Read (AnRead(B01000100))
-#define A5_Read (AnRead(B01000101))
-#define A6_Read (AnRead(B01000110))
-#define A7_Read (AnRead(B01000111))
+#define A0_Read (AnRead(B00000000))
+#define A1_Read (AnRead(B00000001))
+#define A2_Read (AnRead(B00000010))
+#define A3_Read (AnRead(B00000011))
+#define A4_Read (AnRead(B00000100))
+#define A5_Read (AnRead(B00000101))
+#define A6_Read (AnRead(B00000110))
+#define A7_Read (AnRead(B00000111))
+
     uint16_t AnRead(uint8_t An_pin);
 
 //**************Small UART******************************

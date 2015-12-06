@@ -161,7 +161,7 @@ void SendSPI(uint8_t SPI_data)
 //**********AnalogRead***************************
 uint16_t AnRead(uint8_t An_pin)
 {
-  ADMUX=An_pin;
+  ADMUX = An_pin + B01000000;
   delay_us(10);
   ADCSRA=B11000110;	//B11000111-125kHz B11000110-250kHz
   while (ADCSRA & (1 << ADSC));
@@ -348,11 +348,145 @@ void delay_us(uint16_t tic_us)
 		  );
 }
 
-void D_In(unsigned int pin)
+void D_In(int pin)
 {
-    (*_d_in[pin].addr) &= _d_in[pin].value;
+    switch (pin)
+    {
+        case 0:D0_In; break;
+        case 1:D1_In; break;
+        case 2:D2_In; break;
+        case 3:D3_In; break;
+        case 4:D4_In; break;
+        case 5:D5_In; break;
+        case 6:D6_In; break;
+        case 7:D7_In; break;
+        case 8:D8_In; break;
+        case 9:D9_In; break;
+        case 10:D10_In; break;
+        case 11:D11_In; break;
+        case 12:D12_In; break;
+        case 13:D13_In; break;
+        case 14:D14_In; break;
+        case 15:D15_In; break;
+        case 16:D16_In; break;
+        case 17:D17_In; break;
+        case 18:D18_In; break;
+        case 19:D19_In; break;
+    }
 }
 
+void D_Out(int pin)
+{
+    switch (pin)
+    {
+        case 0:D0_Out; break;
+        case 1:D1_Out; break;
+        case 2:D2_Out; break;
+        case 3:D3_Out; break;
+        case 4:D4_Out; break;
+        case 5:D5_Out; break;
+        case 6:D6_Out; break;
+        case 7:D7_Out; break;
+        case 8:D8_Out; break;
+        case 9:D9_Out; break;
+        case 10:D10_Out; break;
+        case 11:D11_Out; break;
+        case 12:D12_Out; break;
+        case 13:D13_Out; break;
+        case 14:D14_Out; break;
+        case 15:D15_Out; break;
+        case 16:D16_Out; break;
+        case 17:D17_Out; break;
+        case 18:D18_Out; break;
+        case 19:D19_Out; break;
+    }
+}
+
+void D_High(int pin)
+{
+    switch (pin)
+    {
+        case 0:D0_High; break;
+        case 1:D1_High; break;
+        case 2:D2_High; break;
+        case 3:D3_High; break;
+        case 4:D4_High; break;
+        case 5:D5_High; break;
+        case 6:D6_High; break;
+        case 7:D7_High; break;
+        case 8:D8_High; break;
+        case 9:D9_High; break;
+        case 10:D10_High; break;
+        case 11:D11_High; break;
+        case 12:D12_High; break;
+        case 13:D13_High; break;
+        case 14:D14_High; break;
+        case 15:D15_High; break;
+        case 16:D16_High; break;
+        case 17:D17_High; break;
+        case 18:D18_High; break;
+        case 19:D19_High; break;
+    }
+}
+
+void D_Low(int pin)
+{
+    switch (pin)
+    {
+        case 0:D0_Low; break;
+        case 1:D1_Low; break;
+        case 2:D2_Low; break;
+        case 3:D3_Low; break;
+        case 4:D4_Low; break;
+        case 5:D5_Low; break;
+        case 6:D6_Low; break;
+        case 7:D7_Low; break;
+        case 8:D8_Low; break;
+        case 9:D9_Low; break;
+        case 10:D10_Low; break;
+        case 11:D11_Low; break;
+        case 12:D12_Low; break;
+        case 13:D13_Low; break;
+        case 14:D14_Low; break;
+        case 15:D15_Low; break;
+        case 16:D16_Low; break;
+        case 17:D17_Low; break;
+        case 18:D18_Low; break;
+        case 19:D19_Low; break;
+    }
+}
+
+uint16_t D_Read(int pin)
+{
+    switch (pin)
+    {
+        case 0: return D0_Read; break;
+        case 1: return D1_Read; break;
+        case 2: return D2_Read; break;
+        case 3: return D3_Read; break;
+        case 4: return D4_Read; break;
+        case 5: return D5_Read; break;
+        case 6: return D6_Read; break;
+        case 7: return D7_Read; break;
+        case 8: return D8_Read; break;
+        case 9: return D9_Read; break;
+        case 10: return D10_Read; break;
+        case 11: return D11_Read; break;
+        case 12: return D12_Read; break;
+        case 13: return D13_Read; break;
+        case 14: return D14_Read; break;
+        case 15: return D15_Read; break;
+        case 16: return D16_Read; break;
+        case 17: return D17_Read; break;
+        case 18: return D18_Read; break;
+        case 19: return D19_Read; break;
+    }
+}
+
+void D_Pin(int pin, int value)
+{
+    value == 0 ? D_Low(pin) : D_High(pin);
+}
 
 // ******************************************MEGA**********************************************
 //*********************************************************************************************
