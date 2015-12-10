@@ -137,10 +137,12 @@ struct LowPin
 #define D19_Low PORTC &= B11011111
 
 void D_In(int pin);
+void D_In_Pullup(int pin);
 void D_Out(int pin);
 void D_High(int pin);
 void D_Low(int pin);
-void D_Pin(int Pin, int Status);
+void D_Inv(int pin);
+void D_Pin(int pin, int value);
 uint16_t D_Read(int pin);
 
 

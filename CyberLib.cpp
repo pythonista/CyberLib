@@ -375,6 +375,32 @@ void D_In(int pin)
     }
 }
 
+void D_In_Pullup(int pin)
+{
+    switch (pin)
+    {
+        case 0: D0_In; D0_High; break;
+        case 1: D1_In; D1_High; break;
+        case 2: D2_In; D2_High; break;
+        case 3: D3_In; D3_High; break;
+        case 4: D4_In; D4_High; break;
+        case 5: D5_In; D5_High; break;
+        case 6: D6_In; D6_High; break;
+        case 7: D7_In; D7_High; break;
+        case 8: D8_In; D8_High; break;
+        case 9: D9_In; D9_High; break;
+        case 10: D10_In; D10_High; break;
+        case 11: D11_In; D11_High; break;
+        case 12: D12_In; D12_High; break;
+        case 13: D13_In; D13_High; break;
+        case 14: D14_In; D14_High; break;
+        case 15: D15_In; D15_High; break;
+        case 16: D16_In; D16_High; break;
+        case 17: D17_In; D17_High; break;
+        case 18: D18_In; D18_High; break;
+        case 19: D19_In; D19_High; break;
+    }
+}
 void D_Out(int pin)
 {
     switch (pin)
@@ -456,30 +482,56 @@ void D_Low(int pin)
     }
 }
 
+void D_Inv(int pin)
+{
+    switch (pin)
+    {
+        case 0: D0_Inv; break;
+        case 1: D1_Inv; break;
+        case 2: D2_Inv; break;
+        case 3: D3_Inv; break;
+        case 4: D4_Inv; break;
+        case 5: D5_Inv; break;
+        case 6: D6_Inv; break;
+        case 7: D7_Inv; break;
+        case 8: D8_Inv; break;
+        case 9: D9_Inv; break;
+        case 10: D10_Inv; break;
+        case 11: D11_Inv; break;
+        case 12: D12_Inv; break;
+        case 13: D13_Inv; break;
+        case 14: D14_Inv; break;
+        case 15: D15_Inv; break;
+        case 16: D16_Inv; break;
+        case 17: D17_Inv; break;
+        case 18: D18_Inv; break;
+        case 19: D19_Inv; break;
+    }
+}
 uint16_t D_Read(int pin)
 {
     switch (pin)
     {
-        case 0: return D0_Read; break;
-        case 1: return D1_Read; break;
-        case 2: return D2_Read; break;
-        case 3: return D3_Read; break;
-        case 4: return D4_Read; break;
-        case 5: return D5_Read; break;
-        case 6: return D6_Read; break;
-        case 7: return D7_Read; break;
-        case 8: return D8_Read; break;
-        case 9: return D9_Read; break;
-        case 10: return D10_Read; break;
-        case 11: return D11_Read; break;
-        case 12: return D12_Read; break;
-        case 13: return D13_Read; break;
-        case 14: return D14_Read; break;
-        case 15: return D15_Read; break;
-        case 16: return D16_Read; break;
-        case 17: return D17_Read; break;
-        case 18: return D18_Read; break;
-        case 19: return D19_Read; break;
+        case 0: return D0_Read;
+        case 1: return D1_Read;
+        case 2: return D2_Read;
+        case 3: return D3_Read;
+        case 4: return D4_Read;
+        case 5: return D5_Read;
+        case 6: return D6_Read;
+        case 7: return D7_Read;
+        case 8: return D8_Read;
+        case 9: return D9_Read;
+        case 10: return D10_Read;
+        case 11: return D11_Read;
+        case 12: return D12_Read;
+        case 13: return D13_Read;
+        case 14: return D14_Read;
+        case 15: return D15_Read;
+        case 16: return D16_Read;
+        case 17: return D17_Read;
+        case 18: return D18_Read;
+        case 19: return D19_Read;
     }
 }
 
